@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: A guide to exercise and nutrition
+  description: TBA
+  version: 3.0.0
+servers:
+- url: http://127.0.0.1:8080/exercise-and-nutrition-api/v3
+paths:
+  /exercises:
+    get:
+      summary: Get a list of exercises
+      operationId: controller_get_exercises
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /foods:
+    get:
+      summary: Get a list of foods
+      operationId: controller_get_foods
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Food'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    Exercise:
+      type: object
+      properties:
+        name:
+          type: string
+        body_part:
+          type: string
+        equipment:
+          type: string
+        target:
+          type: string
+        instructions:
+          type: string
+      example:
+        instructions: instructions
+        name: name
+        equipment: equipment
+        body_part: body_part
+        target: target
+    Food:
+      type: object
+      properties:
+        name:
+          type: string
+        diet:
+          type: string
+        meal_type:
+          type: string
+        cal:
+          type: number
+        fat:
+          type: number
+        carb:
+          type: number
+        protein:
+          type: number
+      example:
+        carb: 1.46581298050294517310021547018550336360931396484375
+        meal_type: meal_type
+        protein: 5.962133916683182377482808078639209270477294921875
+        name: name
+        fat: 6.02745618307040320615897144307382404804229736328125
+        diet: diet
+        cal: 0.80082819046101150206595775671303272247314453125
+

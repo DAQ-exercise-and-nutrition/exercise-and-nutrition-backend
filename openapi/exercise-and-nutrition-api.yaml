@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: A guide to exercise and nutrition
+  description:
+    TBA
+  version: 3.0.0
+servers:
+  - url: http://127.0.0.1:8080/exercise-and-nutrition-api/v3
+
+paths:
+  /exercises:
+    get:
+      summary: Get a list of exercises
+      operationId: controller.get_exercises
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+
+  /foods:
+    get:
+      summary: Get a list of foods
+      operationId: controller.get_foods
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Food'
+
+components:
+  schemas:
+    Exercise:
+      type: object
+      properties:
+        name:
+          type: string
+        body_part:
+          type: string
+        equipment:
+          type: string
+        target:
+          type: string
+        instructions:
+          type: string
+
+    Food:
+      type: object
+      properties:
+        name:
+          type: string
+        diet:
+          type: string
+        meal_type:
+          type: string
+        cal:
+          type: number
+        fat:
+          type: number
+        carb:
+          type: number
+        protein:
+          type: number
