@@ -4,6 +4,7 @@ import pymysql
 from dbutils.pooled_db import PooledDB
 from config import OPENAPI_STUB_DIR, DB_HOST, DB_USER, DB_PASSWD, DB_NAME
 from urllib.parse import unquote
+import random
 
 sys.path.append(OPENAPI_STUB_DIR)
 from swagger_server import models
@@ -17,9 +18,54 @@ pool = PooledDB(creator=pymysql,
                 blocking=True)
 
 
-def get_exercises():
+def get_exercises(target=None, body_part=None, limit=None, randomize=False):
+    sql_query = """
+        SELECT name, body_part, equipment, target, instructions
+        FROM Exercise
+    """
+
+    if target:
+        sql_query += f" WHERE target = '{target}'"
+    elif body_part:
+        sql_query += f" WHERE body_part = '{body_part}'"
+
     with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("SELECT name, body_part, equipment, target, instructions FROM Exercise")
+        cs.execute(sql_query)
+        results = cs.fetchall()
+
+    if randomize:
+        random.shuffle(results)
+
+    if limit:
+        results = results[:limit]
+
+    return [
+        {
+            "name": row[0],
+            "body_part": row[1],
+            "equipment": row[2],
+            "target": row[3],
+            "instructions": row[4]
+        }
+        for row in results
+    ]
+
+
+def get_exercises_by_body_part(body_part, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT name, body_part, equipment, target, instructions
+        FROM Exercise
+        WHERE body_part = '{body_part}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
         results = cs.fetchall()
         return [
             {
@@ -33,15 +79,21 @@ def get_exercises():
         ]
 
 
-def get_exercises_by_body_part(body_part):
-    decoded_body_part = unquote(body_part)
+def get_exercises_by_target(target, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT name, body_part, equipment, target, instructions
+        FROM Exercise
+        WHERE target = '{target}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
 
     with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("""
-            SELECT name, body_part, equipment, target, instructions
-            FROM Exercise
-            WHERE body_part = %s
-        """, [decoded_body_part])
+        cs.execute(sql_query)
         results = cs.fetchall()
         return [
             {
@@ -55,31 +107,25 @@ def get_exercises_by_body_part(body_part):
         ]
 
 
-def get_exercises_by_target(target):
-    decoded_target = unquote(target)
+def get_foods(diet=None, meal_type=None, limit=None, randomize=False):
+    sql_query = """
+        SELECT name, diet, meal_type, cal, fat, carb, protein
+        FROM Food
+    """
+
+    if diet:
+        sql_query += f" WHERE diet = '{diet}'"
+    elif meal_type:
+        sql_query += f" WHERE meal_type = '{meal_type}'"
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
 
     with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("""
-            SELECT name, body_part, equipment, target, instructions
-            FROM Exercise
-            WHERE target = %s
-        """, [decoded_target])
-        results = cs.fetchall()
-        return [
-            {
-                "name": row[0],
-                "body_part": row[1],
-                "equipment": row[2],
-                "target": row[3],
-                "instructions": row[4]
-            }
-            for row in results
-        ]
-
-
-def get_foods():
-    with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("SELECT name, diet, meal_type, cal, fat, carb, protein FROM Food")
+        cs.execute(sql_query)
         results = cs.fetchall()
         return [
             {
@@ -95,15 +141,21 @@ def get_foods():
         ]
 
 
-def get_foods_by_diet(diet):
-    decoded_diet = unquote(diet)
+def get_foods_by_diet(diet, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT name, diet, meal_type, cal, fat, carb, protein
+        FROM Food
+        WHERE diet = '{diet}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
 
     with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("""
-            SELECT name, diet, meal_type, cal, fat, carb, protein
-            FROM Food
-            WHERE diet = %s
-        """, [decoded_diet])
+        cs.execute(sql_query)
         results = cs.fetchall()
         return [
             {
@@ -119,15 +171,21 @@ def get_foods_by_diet(diet):
         ]
 
 
-def get_foods_by_meal_type(meal_type):
-    decoded_meal_type = unquote(meal_type)
+def get_foods_by_meal_type(meal_type, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT name, diet, meal_type, cal, fat, carb, protein
+        FROM Food
+        WHERE meal_type = '{meal_type}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
 
     with pool.connection() as conn, conn.cursor() as cs:
-        cs.execute("""
-            SELECT name, diet, meal_type, cal, fat, carb, protein
-            FROM Food
-            WHERE meal_type = %s
-        """, [decoded_meal_type])
+        cs.execute(sql_query)
         results = cs.fetchall()
         return [
             {
@@ -141,3 +199,13 @@ def get_foods_by_meal_type(meal_type):
             }
             for row in results
         ]
+
+
+data = [
+    {"name": "Exercise 1", "target": "abs"},
+    {"name": "Exercise 2", "target": "abs"},
+    {"name": "Exercise 3", "target": "abs"}
+]
+
+random.shuffle(data)
+print(data)
