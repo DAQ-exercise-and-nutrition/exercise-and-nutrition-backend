@@ -8,8 +8,31 @@ servers:
 paths:
   /exercises:
     get:
-      summary: Get a list of exercises
+      summary: Get a list of all exercises
       operationId: controller_get_exercises
+      parameters:
+      - name: target
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
@@ -33,6 +56,21 @@ paths:
         explode: false
         schema:
           type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
@@ -56,6 +94,21 @@ paths:
         explode: false
         schema:
           type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
@@ -69,8 +122,38 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /foods:
     get:
-      summary: Get a list of foods
+      summary: Get a list of all foods
       operationId: controller_get_foods
+      parameters:
+      - name: diet
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: meal_type
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
@@ -94,6 +177,21 @@ paths:
         explode: false
         schema:
           type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
@@ -117,6 +215,21 @@ paths:
         explode: false
         schema:
           type: string
+      - name: LIMIT
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: RANDOM
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: Success
