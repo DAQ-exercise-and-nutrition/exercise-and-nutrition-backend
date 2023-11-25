@@ -10,8 +10,25 @@ servers:
 paths:
   /exercises:
     get:
-      summary: Get a list of exercises
+      summary: Get a list of all exercises
       operationId: controller.get_exercises
+      parameters:
+        - name: target
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
@@ -32,6 +49,17 @@ paths:
           required: true
           schema:
             type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
@@ -52,6 +80,17 @@ paths:
           required: true
           schema:
             type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
@@ -65,8 +104,30 @@ paths:
 
   /foods:
     get:
-      summary: Get a list of foods
+      summary: Get a list of all foods
       operationId: controller.get_foods
+      parameters:
+        - name: diet
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: meal_type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
@@ -88,6 +149,17 @@ paths:
           required: true
           schema:
             type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
@@ -108,6 +180,17 @@ paths:
           required: true
           schema:
             type: string
+        - name: LIMIT
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: RANDOM
+          in: query
+          required: false
+          schema:
+            type: boolean
       responses:
         200:
           description: Success
