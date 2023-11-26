@@ -1,3 +1,4 @@
+from swagger_server import models
 import sys
 from flask import abort, request
 import pymysql
@@ -7,7 +8,6 @@ from urllib.parse import unquote
 import random
 
 sys.path.append(OPENAPI_STUB_DIR)
-from swagger_server import models
 
 pool = PooledDB(creator=pymysql,
                 host=DB_HOST,
@@ -34,8 +34,7 @@ def get_exercises(target=None, body_part=None, limit=None, randomize=False):
         results = cs.fetchall()
 
     if randomize:
-        random.shuffle(results)
-
+        results = random.choices(results, k=len(results))
     if limit:
         results = results[:limit]
 
@@ -57,26 +56,23 @@ def get_exercises_by_body_part(body_part, limit=None, randomize=False):
         FROM Exercise
         WHERE body_part = '{body_part}'
     """
-
-    if randomize:
-        sql_query += " ORDER BY RAND()"
-
-    if limit:
-        sql_query += f" LIMIT {limit}"
-
     with pool.connection() as conn, conn.cursor() as cs:
         cs.execute(sql_query)
-        results = cs.fetchall()
-        return [
-            {
-                "name": row[0],
-                "body_part": row[1],
-                "equipment": row[2],
-                "target": row[3],
-                "instructions": row[4]
-            }
-            for row in results
-        ]
+        results = list(cs.fetchall())
+    if randomize:
+        results = random.choices(results, k=len(results))
+    if limit:
+        results = results[:limit]
+    return [
+        {
+            "name": row[0],
+            "body_part": row[1],
+            "equipment": row[2],
+            "target": row[3],
+            "instructions": row[4]
+        }
+        for row in results
+    ]
 
 
 def get_exercises_by_target(target, limit=None, randomize=False):

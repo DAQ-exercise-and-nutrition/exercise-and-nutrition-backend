@@ -3,3 +3,4 @@ DBUtils
 PyMySQL
 connexion<3.0.0
 urllib3==1.26.6
+flask-cors

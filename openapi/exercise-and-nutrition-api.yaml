@@ -18,13 +18,13 @@ paths:
           required: false
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
@@ -49,13 +49,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
@@ -80,13 +80,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
@@ -117,13 +117,13 @@ paths:
           required: false
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
@@ -149,13 +149,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
@@ -180,13 +180,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: LIMIT
+        - name: limit
           in: query
           required: false
           schema:
             type: integer
             minimum: 1
-        - name: RANDOM
+        - name: randomize
           in: query
           required: false
           schema:
