@@ -197,11 +197,57 @@ def get_foods_by_meal_type(meal_type, limit=None, randomize=False):
         ]
 
 
-data = [
-    {"name": "Exercise 1", "target": "abs"},
-    {"name": "Exercise 2", "target": "abs"},
-    {"name": "Exercise 3", "target": "abs"}
-]
+def get_nutrition(limit=None, randomize=False):
+    sql_query = """
+        SELECT nutrition_id, nutrition_recomend, goal, exercise_recommend
+        FROM Nutrition
+    """
 
-random.shuffle(data)
-print(data)
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
+        results = cs.fetchall()
+        return [
+            {
+                "nutrition_id": row[0],
+                "nutrition_recomend": row[1],
+                "goal": row[2],
+                "exercise_recommend": row[3]
+            }
+            for row in results
+        ]
+
+
+def get_nutrition_by_goal(goal, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT nutrition_id, nutrition_recomend, goal, exercise_recommend
+        FROM Nutrition
+        WHERE goal = '{goal}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
+        results = cs.fetchall()
+        return [
+            {
+                "nutrition_id": row[0],
+                "nutrition_recomend": row[1],
+                "goal": row[2],
+                "exercise_recommend": row[3]
+            }
+            for row in results
+        ]
+
+
+
