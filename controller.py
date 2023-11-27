@@ -250,4 +250,60 @@ def get_nutrition_by_goal(goal, limit=None, randomize=False):
         ]
 
 
+def get_reps_set(limit=None, randomize=False):
+    sql_query = """
+        SELECT reps_id, goal, sets, reps, weight_lifting, rest, stretching
+        FROM Reps_set
+    """
 
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
+        results = cs.fetchall()
+        return [
+            {
+                "reps_id": row[0],
+                "goal": row[1],
+                "sets": row[2],
+                "reps": row[3],
+                "weight_lifting": row[4],
+                "rest": row[5],
+                "stretching": row[6]
+            }
+            for row in results
+        ]
+
+
+def get_reps_set_by_goal(goal, limit=None, randomize=False):
+    sql_query = f"""
+        SELECT reps_id, goal, sets, reps, weight_lifting, rest, stretching
+        FROM Reps_set
+        WHERE goal = '{goal}'
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
+        results = cs.fetchall()
+        return [
+            {
+                "reps_id": row[0],
+                "goal": row[1],
+                "sets": row[2],
+                "reps": row[3],
+                "weight_lifting": row[4],
+                "rest": row[5],
+                "stretching": row[6]
+            }
+            for row in results
+        ]
