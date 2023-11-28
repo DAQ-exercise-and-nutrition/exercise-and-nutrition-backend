@@ -307,3 +307,35 @@ def get_reps_set_by_goal(goal, limit=None, randomize=False):
             }
             for row in results
         ]
+
+
+def get_users(limit=None, randomize=False):
+    sql_query = """
+        SELECT user_id, ts, name, gender, age, weight, height, level, goal, target
+        FROM User
+    """
+
+    if randomize:
+        sql_query += " ORDER BY RAND()"
+
+    if limit:
+        sql_query += f" LIMIT {limit}"
+
+    with pool.connection() as conn, conn.cursor() as cs:
+        cs.execute(sql_query)
+        results = cs.fetchall()
+        return [
+            {
+                "user_id": row[0],
+                "ts": row[1],
+                "name": row[2],
+                "gender": row[3],
+                "age": row[4],
+                "weight": row[5],
+                "height": row[6],
+                "level": row[7],
+                "goal": row[8],
+                "target": row[9]
+            }
+            for row in results
+        ]
