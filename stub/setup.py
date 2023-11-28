@@ -31,6 +31,6 @@ setup(
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},
     long_description="""\
-    Exercises data that provide information of exercise for each body part, food data that provide nutrition and calorie of food, reps/set data that provide information about how many reps you should play or how many set and rest between set following each condition, nutrition data that following the goal that user needed for example if user need to increase muscle you should eat high-protein food.
+    Data that provide information of exercise for each body part, food data that provide nutrition and calorie of food, reps/set data that provide information about how many reps you should play or how many set and rest between set following each condition, nutrition data that following the goal that user needed for example if user need to increase muscle you should eat high-protein food
     """
 )
