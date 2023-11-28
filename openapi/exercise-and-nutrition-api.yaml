@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: A guide to exercise and nutrition
   description:
-    TBA
+    Data that provide information of exercise for each body part, food data that provide nutrition and calorie of food, reps/set data that provide information about how many reps you should play or how many set and rest between set following each condition, nutrition data that following the goal that user needed for example if user need to increase muscle you should eat high-protein food
   version: 3.0.0
 servers:
   - url: http://127.0.0.1:8080/exercise-and-nutrition-api/v3
@@ -16,6 +16,8 @@ tags:
     description: Everything about nutrition
   - name: Reps_set
     description: Everything about reps_set
+  - name: User
+    description: Everything about user
 
 paths:
   /exercises:
@@ -349,6 +351,36 @@ paths:
                 items:
                   $ref: '#/components/schemas/Reps_set'
 
+  /users:
+    get:
+      tags:
+        - User
+      summary: Get user recommendations
+      operationId: controller.get_users
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: randomize
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+
+
 
 components:
   schemas:
@@ -413,3 +445,28 @@ components:
           type: integer
         stretching:
           type: integer
+
+
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+        ts:
+          type: string
+        name:
+          type: string
+        gender:
+          type: string
+        age:
+          type: integer
+        weight:
+          type: number
+        height:
+          type: number
+        level:
+          type: string
+        goal:
+          type: string
+        target:
+          type: string
