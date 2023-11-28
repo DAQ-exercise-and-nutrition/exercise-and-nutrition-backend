@@ -55,13 +55,7 @@ Before you begin, make sure you have Python and pip installed on your machine.
 
 ### Configuration
 
-1. Copy the example configuration file and customize it:
-
-   ```bash
-   cp config.example.py config.py
-   ```
-
-   Edit the `config.py` file with your database connection details, secret key, and any other necessary configurations.
+Edit the `config.py` file with your database connection details, and any other necessary configurations.
 
 ### Running the Backend
 
